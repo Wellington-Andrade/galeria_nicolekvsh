@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 export default function MatarazzoSection() {
   return (
     <section id="matarazzo" className="site-section matarazzo-section">
@@ -17,10 +19,10 @@ export default function MatarazzoSection() {
         <h2>Matarazzo</h2>
         <span className="matarazzo-tick" aria-hidden="true" />
         <p>Um projeto em construção. Entre passado, presença e futuro.</p>
-        <a className="button button-arrow" href="#contato">
+        <Link className="button button-arrow" to="/matarazzo">
           Conhecer o projeto
           <span aria-hidden="true">→</span>
-        </a>
+        </Link>
       </div>
     </section>
   )

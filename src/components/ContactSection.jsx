@@ -1,10 +1,19 @@
-export default function ContactSection() {
+// `embedded` = true quando usado dentro da página /contato, onde o título
+// já vem do hero da página (evita "Contato" duplicado). Na home fica completo.
+export default function ContactSection({ embedded = false }) {
   return (
-    <section id="contato" className="site-section contact-section">
+    <section
+      id="contato"
+      className={`site-section contact-section${embedded ? " is-embedded" : ""}`}
+    >
       <div className="section-copy">
-        <span className="section-index">06</span>
-        <h2>Contato</h2>
-        <p>Vamos conversar sobre arte, projetos e colaborações.</p>
+        {!embedded ? (
+          <>
+            <span className="section-index">06</span>
+            <h2>Contato</h2>
+            <p>Vamos conversar sobre arte, projetos e colaborações.</p>
+          </>
+        ) : null}
 
         <div className="contact-links">
           <a href="mailto:nicolekvsh.art@gmail.com">nicolekvsh.art@gmail.com</a>

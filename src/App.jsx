@@ -1,16 +1,29 @@
 import { useEffect, useState } from "react"
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom"
 import VantaBackground from "./components/VantaBackground"
 import Header from "./components/Header"
-import Hero from "./components/Hero"
-import GallerySection from "./components/GallerySection"
-import ArtworkFeature from "./components/ArtworkFeature"
-import MatarazzoSection from "./components/MatarazzoSection"
-import CollectionsSection from "./components/CollectionsSection"
-import ExtrasSection from "./components/ExtrasSection"
-import ContactSection from "./components/ContactSection"
 import BottomNav from "./components/BottomNav"
+import ScrollManager from "./components/ScrollManager"
+import HomePage from "./pages/HomePage"
+import GalleryPage from "./pages/GalleryPage"
+import MatarazzoPage from "./pages/MatarazzoPage"
+import CollectionsPage from "./pages/CollectionsPage"
+import ExtrasPage from "./pages/ExtrasPage"
+import ContactPage from "./pages/ContactPage"
 import { getArtworks, getFeaturedArtwork } from "./lib/sanityClient"
 import "./styles.css"
+
+// O menu inferior é o índice da home: só aparece na própria home.
+function HomeBottomNav() {
+  const location = useLocation()
+  if (location.pathname !== "/") return null
+  return <BottomNav />
+}
 
 export default function App() {
   const [artworks, setArtworks] = useState([])
@@ -18,6 +31,7 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  // Busca única no topo: home, galeria e coleções compartilham as mesmas obras.
   useEffect(() => {
     let active = true
 
@@ -50,21 +64,52 @@ export default function App() {
   }, [])
 
   return (
-    <>
+    <BrowserRouter>
+      {/* Vanta e Header ficam fora das rotas: uma única instância, sem reinicializar. */}
       <VantaBackground />
       <Header />
+      <ScrollManager />
 
-      <main className="site-main">
-        <Hero artwork={featuredArtwork} loading={loading} />
-        <GallerySection artworks={artworks} loading={loading} error={error} />
-        <ArtworkFeature artwork={featuredArtwork || artworks[0]} total={artworks.length} />
-        <MatarazzoSection />
-        <CollectionsSection artworks={artworks} />
-        <ExtrasSection artworks={artworks} />
-        <ContactSection />
-      </main>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              artworks={artworks}
+              featuredArtwork={featuredArtwork}
+              loading={loading}
+              error={error}
+            />
+          }
+        />
+        <Route
+          path="/galeria"
+          element={
+            <GalleryPage artworks={artworks} loading={loading} error={error} />
+          }
+        />
+        <Route path="/matarazzo" element={<MatarazzoPage />} />
+        <Route
+          path="/colecoes"
+          element={<CollectionsPage artworks={artworks} />}
+        />
+        <Route path="/extras" element={<ExtrasPage />} />
+        <Route path="/contato" element={<ContactPage />} />
+        {/* Qualquer rota desconhecida cai na home. */}
+        <Route
+          path="*"
+          element={
+            <HomePage
+              artworks={artworks}
+              featuredArtwork={featuredArtwork}
+              loading={loading}
+              error={error}
+            />
+          }
+        />
+      </Routes>
 
-      <BottomNav />
-    </>
+      <HomeBottomNav />
+    </BrowserRouter>
   )
 }

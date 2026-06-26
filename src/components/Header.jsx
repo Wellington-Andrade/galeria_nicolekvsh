@@ -1,17 +1,22 @@
+import { Link, NavLink } from "react-router-dom"
+
+// Menu superior: navega entre páginas próprias (não usa mais âncoras da home).
 export default function Header() {
   return (
     <header className="site-header">
-      <a className="brand" href="#inicio">
+      <Link className="brand" to="/">
         Nicole Kvsh
-      </a>
+      </Link>
 
       <nav aria-label="Navegação principal">
-        <a href="#inicio">Início</a>
-        <a href="#galeria">Galeria</a>
-        <a href="#matarazzo">Matarazzo</a>
-        <a href="#colecoes">Coleções</a>
-        <a href="#extras">Extras</a>
-        <a href="#contato">Contato</a>
+        <NavLink to="/" end>
+          Início
+        </NavLink>
+        <NavLink to="/galeria">Galeria</NavLink>
+        <NavLink to="/matarazzo">Matarazzo</NavLink>
+        <NavLink to="/colecoes">Coleções</NavLink>
+        <NavLink to="/extras">Extras</NavLink>
+        <NavLink to="/contato">Contato</NavLink>
       </nav>
     </header>
   )
