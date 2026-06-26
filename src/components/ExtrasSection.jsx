@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 export default function ExtrasSection() {
   return (
     <section id="extras" className="site-section extras-section">
@@ -5,6 +7,12 @@ export default function ExtrasSection() {
         <span className="section-index">05</span>
         <h2>Extras</h2>
         <p>Entrevistas, vídeos, bastidores e registros complementares.</p>
+
+        <div className="section-actions">
+          <Link className="button" to="/extras">
+            Ver mais
+          </Link>
+        </div>
       </div>
 
       <div className="extras-list">

@@ -1,16 +1,13 @@
+import { Link } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
+import { artworkMeta } from "../lib/artworkMeta"
 
 export default function ArtworkFeature({ artwork, total }) {
   const imageUrl = artwork?.image
     ? urlFor(artwork.image).width(1400).quality(84).url()
     : null
 
-  const dimensions = artwork?.image?.assetMetadata?.dimensions
-  const dimensionLabel =
-    dimensions?.width && dimensions?.height
-      ? `${dimensions.width} × ${dimensions.height} px`
-      : "Em construção"
-
+  const meta = artworkMeta(artwork)
   const totalLabel = String(total || 1).padStart(2, "0")
 
   return (
@@ -46,15 +43,15 @@ export default function ArtworkFeature({ artwork, total }) {
         <dl className="feature-meta">
           <div>
             <dt>Ano</dt>
-            <dd>Em construção</dd>
+            <dd>{meta.year}</dd>
           </div>
           <div>
             <dt>Técnica</dt>
-            <dd>Em construção</dd>
+            <dd>{meta.technique}</dd>
           </div>
           <div>
             <dt>Dimensões</dt>
-            <dd>{dimensionLabel}</dd>
+            <dd>{meta.dimensions}</dd>
           </div>
         </dl>
 
@@ -63,9 +60,9 @@ export default function ArtworkFeature({ artwork, total }) {
           adicionadas em breve diretamente pelo acervo.
         </p>
 
-        <a className="button" href="#galeria">
-          Voltar para galeria
-        </a>
+        <Link className="button" to="/galeria">
+          Ir para a galeria
+        </Link>
       </div>
     </section>
   )

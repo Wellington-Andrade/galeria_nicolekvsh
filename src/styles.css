@@ -1451,3 +1451,186 @@ p {
     padding-top: clamp(120px, 18vh, 160px);
   }
 }
+
+/* =========================================================
+   Grupos de botões nas seções
+   ========================================================= */
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+/* Os botões dentro do grupo não herdam o margin-top individual */
+.section-copy .section-actions .button,
+.feature-copy .section-actions .button {
+  margin-top: 0;
+}
+
+/* =========================================================
+   Cards clicáveis (abrem o lightbox) — reset de <button>
+   ========================================================= */
+button.curated-card,
+button.gallery-page-card {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.curated-card.is-clickable img,
+.gallery-page-card.is-clickable img {
+  transition: transform 0.55s ease;
+}
+
+.curated-card.is-clickable:hover img,
+.gallery-page-card.is-clickable:hover img {
+  transform: scale(1.05);
+}
+
+.curated-card.is-clickable:focus-visible,
+.gallery-page-card.is-clickable:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   Lightbox da obra (modal)
+   ========================================================= */
+.artwork-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 56px);
+  background: rgba(3, 3, 3, 0.88);
+  backdrop-filter: blur(10px);
+  animation: artwork-modal-fade 0.2s ease;
+}
+
+@keyframes artwork-modal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.artwork-modal-dialog {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.7fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  width: min(100%, 1180px);
+  max-height: 88vh;
+}
+
+/* Moldura espelhando a tela emoldurada do Hero / Obra destaque */
+.artwork-modal-frame {
+  padding: clamp(12px, 1.6vw, 22px);
+  border: 1px solid rgba(243, 230, 208, 0.22);
+  border-radius: 4px;
+  background: linear-gradient(155deg, #14110d, #0a0907);
+  box-shadow:
+    0 48px 130px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 clamp(8px, 1.4vw, 16px) rgba(243, 230, 208, 0.07);
+}
+
+.artwork-modal-frame img,
+.artwork-modal-frame .image-placeholder {
+  display: block;
+  width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: 2px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+}
+
+.artwork-modal-info h2 {
+  margin-top: 16px;
+  font-size: clamp(2.4rem, 4.6vw, 4.6rem);
+  line-height: 0.92;
+}
+
+.artwork-modal-info .button {
+  margin-top: 28px;
+}
+
+.artwork-modal-close {
+  position: absolute;
+  top: clamp(-6px, 0vw, 0px);
+  right: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.5);
+  color: var(--text);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.artwork-modal-close:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* Setas do pager como <button> (espelham .feature-arrows a) */
+.feature-arrows button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.feature-arrows button:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+@media (max-width: 860px) {
+  .artwork-modal-dialog {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-height: 88vh;
+    overflow-y: auto;
+    align-content: start;
+  }
+
+  .artwork-modal-frame img,
+  .artwork-modal-frame .image-placeholder {
+    max-height: 52vh;
+  }
+
+  .artwork-modal-close {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+  }
+}

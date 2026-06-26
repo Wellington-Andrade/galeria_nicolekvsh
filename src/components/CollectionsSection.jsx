@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
 
 export default function CollectionsSection({ artworks }) {
@@ -13,6 +14,12 @@ export default function CollectionsSection({ artworks }) {
         <span className="section-index">04</span>
         <h2>Coleções</h2>
         <p>Séries que se conectam por temas, cores, símbolos e sentimentos.</p>
+
+        <div className="section-actions">
+          <Link className="button" to="/colecoes">
+            Ver coleções
+          </Link>
+        </div>
       </div>
 
       <div className="collections-grid">

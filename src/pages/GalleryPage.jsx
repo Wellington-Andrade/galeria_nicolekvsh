@@ -1,11 +1,13 @@
+import { useState } from "react"
 import { urlFor } from "../lib/sanityClient"
+import ArtworkModal from "../components/ArtworkModal"
 
 // Destaca algumas obras com tamanho maior para quebrar a monotonia do grid.
 function isLarge(index) {
   return index % 6 === 0
 }
 
-function GalleryCard({ artwork, index }) {
+function GalleryCard({ artwork, index, onOpen }) {
   const large = isLarge(index)
   const imageUrl = artwork?.image
     ? urlFor(artwork.image)
@@ -15,7 +17,12 @@ function GalleryCard({ artwork, index }) {
     : null
 
   return (
-    <figure className={`gallery-page-card ${large ? "is-large" : ""}`}>
+    <button
+      type="button"
+      className={`gallery-page-card is-clickable ${large ? "is-large" : ""}`}
+      onClick={() => onOpen(index)}
+      aria-label={`Ampliar obra: ${artwork?.name || ""}`}
+    >
       {imageUrl ? (
         <img src={imageUrl} alt={artwork.name} loading="lazy" decoding="async" />
       ) : (
@@ -28,12 +35,13 @@ function GalleryCard({ artwork, index }) {
         <strong>{artwork?.name || "Obra em construção"}</strong>
         <span>{String(index + 1).padStart(2, "0")}</span>
       </figcaption>
-    </figure>
+    </button>
   )
 }
 
 export default function GalleryPage({ artworks, loading, error }) {
   const items = Array.isArray(artworks) ? artworks : []
+  const [openIndex, setOpenIndex] = useState(null)
 
   return (
     <main className="site-main page-main">
@@ -61,11 +69,23 @@ export default function GalleryPage({ artworks, loading, error }) {
         {items.length > 0 ? (
           <div className="gallery-page-grid">
             {items.map((artwork, index) => (
-              <GalleryCard key={artwork._id} artwork={artwork} index={index} />
+              <GalleryCard
+                key={artwork._id}
+                artwork={artwork}
+                index={index}
+                onOpen={setOpenIndex}
+              />
             ))}
           </div>
         ) : null}
       </section>
+
+      <ArtworkModal
+        artworks={items}
+        index={openIndex}
+        onClose={() => setOpenIndex(null)}
+        onNavigate={setOpenIndex}
+      />
     </main>
   )
 }
