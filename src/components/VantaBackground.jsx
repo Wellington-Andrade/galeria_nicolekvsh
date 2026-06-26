@@ -1,17 +1,24 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 import FOG from "vanta/dist/vanta.fog.min"
 
 export default function VantaBackground() {
   const ref = useRef(null)
   const effectRef = useRef(null)
+  const [isStatic, setIsStatic] = useState(false)
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches
+    // No mobile o WebGL é pesado/instável e o FOG tende a renderizar quase
+    // preto — usamos o gradiente estático (mais rico) no lugar do canvas.
+    const isMobile = window.matchMedia("(max-width: 980px)").matches
 
-    if (prefersReducedMotion || !ref.current) return
+    if (prefersReducedMotion || isMobile || !ref.current) {
+      setIsStatic(true)
+      return
+    }
 
     try {
       effectRef.current = FOG({
@@ -31,7 +38,8 @@ export default function VantaBackground() {
         zoom: 0.6,
       })
     } catch (err) {
-      // Se o efeito não inicializar, o fallback CSS no .vanta-background assume.
+      // Se o efeito não inicializar, cai no gradiente estático mais rico.
+      setIsStatic(true)
       console.error("Vanta FOG não pôde ser inicializado:", err)
     }
 
@@ -43,5 +51,11 @@ export default function VantaBackground() {
     }
   }, [])
 
-  return <div ref={ref} className="vanta-background" aria-hidden="true" />
+  return (
+    <div
+      ref={ref}
+      className={`vanta-background${isStatic ? " is-static" : ""}`}
+      aria-hidden="true"
+    />
+  )
 }

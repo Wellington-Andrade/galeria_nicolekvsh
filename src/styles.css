@@ -139,6 +139,26 @@ p {
   );
 }
 
+/* Fundo estático (mobile / reduced-motion / falha do WebGL):
+   recria o clima do fog — brilho âmbar, teal e laranja sobre o escuro,
+   distribuído verticalmente para preencher telas altas de celular. */
+.vanta-background.is-static {
+  background:
+    radial-gradient(135% 72% at 8% 8%, rgba(231, 184, 95, 0.34), transparent 55%),
+    radial-gradient(120% 86% at 92% 22%, rgba(11, 111, 120, 0.5), transparent 56%),
+    radial-gradient(150% 96% at 50% 98%, rgba(183, 90, 26, 0.46), transparent 60%),
+    linear-gradient(180deg, #0d0a07 0%, #060605 50%, #08110f 100%);
+}
+
+/* Vignette suave no modo estático (sem o escurecimento forte do fog) */
+.vanta-background.is-static::after {
+  background: radial-gradient(
+    125% 95% at 50% 38%,
+    transparent 32%,
+    rgba(0, 0, 0, 0.38) 100%
+  );
+}
+
 /* =========================================================
    Header
    ========================================================= */
