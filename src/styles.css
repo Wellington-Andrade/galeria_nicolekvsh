@@ -647,7 +647,7 @@ p {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 68% 38%;
+  object-position: center top;
 }
 
 /* Gradiente de legibilidade do texto sobre a foto (escuro à esquerda) */
