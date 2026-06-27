@@ -920,12 +920,20 @@ p {
   z-index: 18;
   width: min(94%, 1000px);
   transform: translateX(-50%);
-  background: rgba(5, 5, 5, 0.6);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-radius: 12px;
-  border: 1px solid rgba(243, 230, 208, 0.09);
-  padding: 14px 20px 12px;
+}
+
+/* Vinheta: gradiente que sobe do rodapé, escurece o fundo atrás do nav
+   sem nenhum container ou borda visível */
+.bottom-nav::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 110px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.58) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Trilho + linha de progresso que avança L -> R conforme o scroll */
