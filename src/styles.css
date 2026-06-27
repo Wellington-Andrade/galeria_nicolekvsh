@@ -860,60 +860,52 @@ p {
   gap: clamp(40px, 7vw, 110px);
 }
 
-.contact-links {
+/* Canais de contato: cards clicáveis. Em coluna estreita (home) empilham;
+   em largura cheia (página /contato) ficam lado a lado, via auto-fit. */
+.contact-channels {
   display: grid;
-  gap: 10px;
-  margin-top: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
 }
 
-.contact-links a {
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  text-decoration: none;
-  color: var(--text);
-  transition: color 0.25s ease;
-}
-
-.contact-links a:hover {
-  color: var(--gold);
-}
-
-.contact-form {
+.contact-channel {
   display: grid;
-  gap: 14px;
-  padding: clamp(22px, 3vw, 34px);
+  gap: 8px;
+  padding: clamp(22px, 3vw, 32px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: rgba(9, 9, 8, 0.5);
   backdrop-filter: blur(16px);
-}
-
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  background: rgba(5, 5, 5, 0.5);
+  text-decoration: none;
   color: var(--text);
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  resize: vertical;
+  transition: border-color 0.25s ease, transform 0.25s ease;
 }
 
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
+.contact-channel:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-4px);
+}
+
+.contact-channel-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--muted-soft);
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
-  outline: none;
-  border-color: var(--gold);
+.contact-channel-value {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.15;
+  color: var(--text-strong);
+  overflow-wrap: anywhere;
 }
 
-.contact-form .button {
+.contact-channel-cta {
   margin-top: 6px;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--gold);
 }
 
 /* =========================================================
@@ -1149,6 +1141,8 @@ p {
   min-height: auto;
   margin: 0;
   padding: 4px 0 0;
+  /* Sem a coluna de copy nesta página, os canais ocupam a largura toda. */
+  grid-template-columns: 1fr;
 }
 
 /* Estado vazio elegante (sem obras / sem conteúdo) */
