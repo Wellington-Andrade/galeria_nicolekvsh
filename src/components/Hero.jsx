@@ -8,7 +8,7 @@ export default function Hero({ artwork, loading }) {
   return (
     <section id="inicio" className="site-section hero-section">
       <div className="hero-copy">
-        <p className="eyebrow">Portfólio artístico</p>
+        <p className="eyebrow">Galeria artística</p>
 
         <h1>
           Nicole
