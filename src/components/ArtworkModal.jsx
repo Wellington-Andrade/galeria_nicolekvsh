@@ -1,11 +1,14 @@
 import { useCallback, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { Link } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
 import { artworkMeta } from "../lib/artworkMeta"
-import { whatsappUrl } from "../lib/whatsapp"
+import AcquireButton from "./AcquireButton"
 
 // Lightbox reutilizável: imagem ampliada + Ano/Técnica/Dimensões do Sanity.
 // `index` é null quando fechado. Navega com setas/teclado e fecha no Esc/backdrop.
+// Renderizado via portal no <body> para não ficar preso no stacking context da
+// seção (antes a "obra em destaque" pintava por cima do modal na home).
 export default function ArtworkModal({ artworks, index, onClose, onNavigate }) {
   const list = Array.isArray(artworks) ? artworks : []
   const total = list.length
@@ -47,7 +50,7 @@ export default function ArtworkModal({ artworks, index, onClose, onNavigate }) {
   const meta = artworkMeta(artwork)
   const pager = `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`
 
-  return (
+  return createPortal(
     <div
       className="artwork-modal"
       role="dialog"
@@ -108,21 +111,17 @@ export default function ArtworkModal({ artworks, index, onClose, onNavigate }) {
             </div>
           </dl>
 
+          {artwork.description ? <p>{artwork.description}</p> : null}
+
           <div className="section-actions">
-            <a
-              className="button button-primary"
-              href={whatsappUrl(artwork.name)}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Adquirir obra
-            </a>
+            <AcquireButton artwork={artwork} />
             <Link className="button" to="/galeria" onClick={onClose}>
               Ir para a galeria
             </Link>
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

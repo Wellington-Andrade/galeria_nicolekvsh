@@ -21,6 +21,8 @@ const ARTWORK_PROJECTION = `
   year,
   technique,
   dimensions,
+  description,
+  available,
   collection,
   image {
     ...,

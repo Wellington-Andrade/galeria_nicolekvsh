@@ -287,6 +287,20 @@ p {
   border-color: var(--text-strong);
 }
 
+/* Obra indisponível: botão "Adquirir" vira rótulo apagado e não clicável */
+.button:disabled,
+.button.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: rgba(10, 10, 10, 0.22);
+  color: var(--muted-soft);
+}
+
+.button:disabled:hover,
+.button.is-disabled:hover {
+  border-color: var(--line-strong);
+}
+
 .button-arrow {
   gap: 10px;
 }
@@ -1616,6 +1630,14 @@ button.gallery-page-card {
   margin-top: 16px;
   font-size: clamp(2.4rem, 4.6vw, 4.6rem);
   line-height: 0.92;
+}
+
+.artwork-modal-info p {
+  margin-top: 18px;
+  max-width: 48ch;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .artwork-modal-info .button {

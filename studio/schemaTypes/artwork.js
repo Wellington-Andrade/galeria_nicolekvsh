@@ -40,6 +40,21 @@ export default defineType({
       description: 'Dimensões reais da obra. Ex.: 120 × 80 cm',
     }),
     defineField({
+      name: 'description',
+      title: 'Descrição',
+      type: 'text',
+      rows: 4,
+      description:
+        'Texto opcional sobre a obra. Quando preenchido, substitui o texto padrão na ficha da obra.',
+    }),
+    defineField({
+      name: 'available',
+      title: 'Disponível',
+      type: 'boolean',
+      description: 'Indica se a obra está disponível para aquisição.',
+      initialValue: true,
+    }),
+    defineField({
       name: 'collection',
       title: 'Coleção',
       type: 'string',

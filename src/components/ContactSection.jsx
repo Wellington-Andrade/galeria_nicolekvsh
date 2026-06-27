@@ -16,7 +16,7 @@ export default function ContactSection({ embedded = false }) {
         ) : null}
 
         <div className="contact-links">
-          <a href="mailto:nicolekvsh.art@gmail.com">nicolekvsh.art@gmail.com</a>
+          <a href="mailto:nicolevianart@icloud.com">nicolevianart@icloud.com</a>
           <a
             href="https://www.instagram.com/nicolekvsh"
             target="_blank"
@@ -36,7 +36,7 @@ export default function ContactSection({ embedded = false }) {
         <textarea placeholder="Mensagem" rows="5" aria-label="Mensagem" />
         <a
           className="button button-primary"
-          href="mailto:nicolekvsh.art@gmail.com"
+          href="mailto:nicolevianart@icloud.com"
         >
           Enviar mensagem
         </a>

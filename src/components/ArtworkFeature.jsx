@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
 import { artworkMeta } from "../lib/artworkMeta"
-import { whatsappUrl } from "../lib/whatsapp"
+import AcquireButton from "./AcquireButton"
 
 // Obra em destaque da home. As setas agora percorrem todo o acervo
 // (antes só apontavam para a âncora #galeria e não trocavam de obra).
@@ -83,20 +83,17 @@ export default function ArtworkFeature({ artworks = [], featured }) {
           </div>
         </dl>
 
-        <p>
-          Arquivo em construção. As informações completas da obra serão
-          adicionadas em breve diretamente pelo acervo.
-        </p>
+        {artwork?.description ? (
+          <p>{artwork.description}</p>
+        ) : (
+          <p>
+            Arquivo em construção. As informações completas da obra serão
+            adicionadas em breve diretamente pelo acervo.
+          </p>
+        )}
 
         <div className="section-actions">
-          <a
-            className="button button-primary"
-            href={whatsappUrl(artwork?.name)}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Adquirir obra
-          </a>
+          <AcquireButton artwork={artwork} />
           <Link className="button" to="/galeria">
             Ir para a galeria
           </Link>
