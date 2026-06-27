@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
 import { artworkMeta } from "../lib/artworkMeta"
 import AcquireButton from "./AcquireButton"
-import ArtworkModal from "./ArtworkModal"
 
 // Obra em destaque da home. As setas agora percorrem todo o acervo
 // (antes só apontavam para a âncora #galeria e não trocavam de obra).
@@ -16,8 +15,6 @@ export default function ArtworkFeature({ artworks = [], featured }) {
     ? Math.max(0, list.findIndex((item) => item._id === featured._id))
     : 0
   const [index, setIndex] = useState(startIndex)
-  // null = modal fechado. Abre ampliando a obra atualmente em destaque.
-  const [openIndex, setOpenIndex] = useState(null)
 
   // Realinha quando o acervo chega do Sanity (fetch assíncrono).
   useEffect(() => {
@@ -41,29 +38,18 @@ export default function ArtworkFeature({ artworks = [], featured }) {
 
   return (
     <section id="obra" className="site-section artwork-feature-section">
-      {artwork ? (
-        <button
-          type="button"
-          className="feature-image is-clickable"
-          onClick={() => setOpenIndex(index)}
-          aria-label={`Ampliar obra: ${artwork.name || ""}`}
-        >
-          {imageUrl ? (
-            <img
-              src={imageUrl}
-              alt={artwork.name || ""}
-              loading="lazy"
-              decoding="async"
-            />
-          ) : (
-            <div className="image-placeholder">Obra destaque</div>
-          )}
-        </button>
-      ) : (
-        <div className="feature-image">
+      <div className="feature-image">
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={artwork?.name || ""}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
           <div className="image-placeholder">Obra destaque</div>
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="feature-copy">
         <div className="feature-nav">
@@ -116,19 +102,6 @@ export default function ArtworkFeature({ artworks = [], featured }) {
           </Link>
         </div>
       </div>
-
-      {/* Modal renderiza via portal no <body>: não fica preso no stacking
-          context da seção, então nada da página pinta por cima dele.
-          Navegar no modal acompanha a obra em destaque de fundo. */}
-      <ArtworkModal
-        artworks={list}
-        index={openIndex}
-        onClose={() => setOpenIndex(null)}
-        onNavigate={(i) => {
-          setIndex(i)
-          setOpenIndex(i)
-        }}
-      />
     </section>
   )
 }

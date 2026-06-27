@@ -1582,7 +1582,6 @@ a.collection-page-card {
 /* =========================================================
    Cards clicáveis (abrem o lightbox) — reset de <button>
    ========================================================= */
-button.feature-image,
 button.hero-art-card {
   appearance: none;
   -webkit-appearance: none;
@@ -1594,17 +1593,14 @@ button.hero-art-card {
   overflow: hidden;
 }
 
-button.feature-image img,
 button.hero-art-card img {
   transition: transform 0.55s ease;
 }
 
-button.feature-image.is-clickable:hover img,
 button.hero-art-card.is-clickable:hover img {
   transform: scale(1.04);
 }
 
-button.feature-image.is-clickable:focus-visible,
 button.hero-art-card.is-clickable:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
