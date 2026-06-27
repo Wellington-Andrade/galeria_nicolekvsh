@@ -915,11 +915,15 @@ p {
    ========================================================= */
 .bottom-nav {
   position: fixed;
-  left: 50%;
+  left: 0;
+  right: 0;
   bottom: 22px;
   z-index: 18;
   width: min(94%, 1000px);
-  transform: translateX(-50%);
+  /* Centraliza sem transform: um ancestral transformado vira containing
+     block do ::before fixed, fazendo o gradiente ancorar no nav em vez
+     da viewport (começava "na palavra" em vez do fundo da tela). */
+  margin-inline: auto;
 }
 
 /* Vinheta: gradiente que sobe do rodapé, escurece o fundo atrás do nav
@@ -932,14 +936,13 @@ p {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 200px;
+  height: 130px;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.62) 0%,
-    rgba(0, 0, 0, 0.52) 22%,
-    rgba(0, 0, 0, 0.36) 44%,
-    rgba(0, 0, 0, 0.2) 64%,
-    rgba(0, 0, 0, 0.08) 82%,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.5) 38%,
+    rgba(0, 0, 0, 0.28) 64%,
+    rgba(0, 0, 0, 0.1) 84%,
     transparent 100%
   );
   pointer-events: none;
