@@ -19,11 +19,13 @@ export default function CollectionsPage({ artworks, collections }) {
       <section className="page-body">
         <div className="collections-page-grid">
           {list.map((collection, index) => {
-            const artwork = items.find(
+            // Capa escolhida no Studio; senão, a primeira obra da coleção.
+            const fallback = items.find(
               (item) => item.collection?.slug === collection.slug
             )
-            const imageUrl = artwork?.image
-              ? urlFor(artwork.image).width(1000).quality(78).url()
+            const coverImage = collection.cover || fallback?.image
+            const imageUrl = coverImage
+              ? urlFor(coverImage).width(1000).quality(78).url()
               : null
 
             return (

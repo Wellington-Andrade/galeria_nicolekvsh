@@ -62,7 +62,8 @@ export async function getCollections() {
         "slug": slug.current,
         title,
         subtitle,
-        order
+        order,
+        "cover": coverArtwork->image
       }
   `)
 }

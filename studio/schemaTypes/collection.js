@@ -26,6 +26,21 @@ export default defineType({
       description: 'Breve descrição exibida nos cards da coleção.',
     }),
     defineField({
+      name: 'coverArtwork',
+      title: 'Obra de capa',
+      type: 'reference',
+      to: [{type: 'artwork'}],
+      description:
+        'Obra que representa a coleção nos cards. Deixe em branco para usar a primeira obra automaticamente.',
+      options: {
+        // Lista só as obras desta coleção (as que apontam de volta para ela).
+        filter: ({document}) => {
+          const id = (document._id || '').replace(/^drafts\./, '')
+          return {filter: 'collection._ref == $id', params: {id}}
+        },
+      },
+    }),
+    defineField({
       name: 'order',
       title: 'Ordem',
       type: 'number',
