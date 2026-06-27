@@ -40,6 +40,23 @@ export default defineType({
       description: 'Dimensões reais da obra. Ex.: 120 × 80 cm',
     }),
     defineField({
+      name: 'collection',
+      title: 'Coleção',
+      type: 'string',
+      description:
+        'Define em qual coleção a obra aparece. Deixe em branco para uma obra independente (não entra em nenhuma coleção).',
+      options: {
+        list: [
+          {title: 'Natureza', value: 'natureza'},
+          {title: 'Presença', value: 'presenca'},
+          {title: 'Devaneios', value: 'devaneios'},
+          {title: 'Objetos', value: 'objetos'},
+          {title: 'Retratos', value: 'retratos'},
+          {title: 'Experimentos', value: 'experimentos'},
+        ],
+      },
+    }),
+    defineField({
       name: 'published',
       title: 'Publicada',
       type: 'boolean',

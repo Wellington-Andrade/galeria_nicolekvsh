@@ -21,6 +21,7 @@ const ARTWORK_PROJECTION = `
   year,
   technique,
   dimensions,
+  collection,
   image {
     ...,
     "assetMetadata": asset->metadata {

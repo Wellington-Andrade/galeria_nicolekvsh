@@ -13,10 +13,7 @@ export default function HomePage({ artworks, featuredArtwork, loading, error }) 
     <main className="site-main">
       <Hero artwork={featuredArtwork} loading={loading} />
       <GallerySection artworks={artworks} loading={loading} error={error} />
-      <ArtworkFeature
-        artwork={featuredArtwork || artworks[0]}
-        total={artworks.length}
-      />
+      <ArtworkFeature artworks={artworks} featured={featuredArtwork} />
       <MatarazzoSection />
       <CollectionsSection artworks={artworks} />
       <ExtrasSection artworks={artworks} />

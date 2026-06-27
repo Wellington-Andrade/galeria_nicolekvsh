@@ -13,6 +13,7 @@ import HomePage from "./pages/HomePage"
 import GalleryPage from "./pages/GalleryPage"
 import MatarazzoPage from "./pages/MatarazzoPage"
 import CollectionsPage from "./pages/CollectionsPage"
+import CollectionDetailPage from "./pages/CollectionDetailPage"
 import ExtrasPage from "./pages/ExtrasPage"
 import ContactPage from "./pages/ContactPage"
 import { getArtworks, getFeaturedArtwork } from "./lib/sanityClient"
@@ -92,6 +93,10 @@ export default function App() {
         <Route
           path="/colecoes"
           element={<CollectionsPage artworks={artworks} />}
+        />
+        <Route
+          path="/colecoes/:slug"
+          element={<CollectionDetailPage artworks={artworks} />}
         />
         <Route path="/extras" element={<ExtrasPage />} />
         <Route path="/contato" element={<ContactPage />} />

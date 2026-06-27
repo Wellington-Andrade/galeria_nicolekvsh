@@ -1,14 +1,40 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
 import { artworkMeta } from "../lib/artworkMeta"
+import { whatsappUrl } from "../lib/whatsapp"
 
-export default function ArtworkFeature({ artwork, total }) {
+// Obra em destaque da home. As setas agora percorrem todo o acervo
+// (antes só apontavam para a âncora #galeria e não trocavam de obra).
+export default function ArtworkFeature({ artworks = [], featured }) {
+  const list = Array.isArray(artworks) ? artworks : []
+  const total = list.length
+
+  // Começa na obra em destaque, se ela existir na lista; senão, na primeira.
+  const startIndex = featured
+    ? Math.max(0, list.findIndex((item) => item._id === featured._id))
+    : 0
+  const [index, setIndex] = useState(startIndex)
+
+  // Realinha quando o acervo chega do Sanity (fetch assíncrono).
+  useEffect(() => {
+    setIndex(startIndex)
+  }, [startIndex])
+
+  const goPrev = () => {
+    if (total > 1) setIndex((current) => (current - 1 + total) % total)
+  }
+  const goNext = () => {
+    if (total > 1) setIndex((current) => (current + 1) % total)
+  }
+
+  const artwork = list[index] || featured || null
   const imageUrl = artwork?.image
     ? urlFor(artwork.image).width(1400).quality(84).url()
     : null
 
   const meta = artworkMeta(artwork)
-  const totalLabel = String(total || 1).padStart(2, "0")
+  const pager = `${String(index + 1).padStart(2, "0")} / ${String(total || 1).padStart(2, "0")}`
 
   return (
     <section id="obra" className="site-section artwork-feature-section">
@@ -16,7 +42,7 @@ export default function ArtworkFeature({ artwork, total }) {
         {imageUrl ? (
           <img
             src={imageUrl}
-            alt={artwork.name}
+            alt={artwork?.name || ""}
             loading="lazy"
             decoding="async"
           />
@@ -27,15 +53,17 @@ export default function ArtworkFeature({ artwork, total }) {
 
       <div className="feature-copy">
         <div className="feature-nav">
-          <span className="feature-pager">01 / {totalLabel}</span>
-          <div className="feature-arrows">
-            <a href="#galeria" aria-label="Obra anterior">
-              ‹
-            </a>
-            <a href="#galeria" aria-label="Próxima obra">
-              ›
-            </a>
-          </div>
+          <span className="feature-pager">{pager}</span>
+          {total > 1 ? (
+            <div className="feature-arrows">
+              <button onClick={goPrev} aria-label="Obra anterior" type="button">
+                ‹
+              </button>
+              <button onClick={goNext} aria-label="Próxima obra" type="button">
+                ›
+              </button>
+            </div>
+          ) : null}
         </div>
 
         <h2>{artwork?.name || "Obra em destaque"}</h2>
@@ -60,9 +88,19 @@ export default function ArtworkFeature({ artwork, total }) {
           adicionadas em breve diretamente pelo acervo.
         </p>
 
-        <Link className="button" to="/galeria">
-          Ir para a galeria
-        </Link>
+        <div className="section-actions">
+          <a
+            className="button button-primary"
+            href={whatsappUrl(artwork?.name)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Adquirir obra
+          </a>
+          <Link className="button" to="/galeria">
+            Ir para a galeria
+          </Link>
+        </div>
       </div>
     </section>
   )

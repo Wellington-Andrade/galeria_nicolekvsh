@@ -18,11 +18,11 @@ export default function ContactSection({ embedded = false }) {
         <div className="contact-links">
           <a href="mailto:nicolekvsh.art@gmail.com">nicolekvsh.art@gmail.com</a>
           <a
-            href="https://www.instagram.com/nicole.kvsh"
+            href="https://www.instagram.com/nicolekvsh"
             target="_blank"
             rel="noreferrer"
           >
-            @nicole.kvsh
+            @nicolekvsh
           </a>
         </div>
       </div>

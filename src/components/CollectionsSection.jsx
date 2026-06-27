@@ -1,12 +1,9 @@
 import { Link } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
+import { COLLECTIONS } from "../data/collections"
 
 export default function CollectionsSection({ artworks }) {
-  const collections = [
-    { title: "Natureza", subtitle: "Séries botânicas e paisagens internas" },
-    { title: "Presença", subtitle: "Retratos, corpo e olhar" },
-    { title: "Devaneios", subtitle: "Memória, sonho e experimentação" },
-  ]
+  const collections = COLLECTIONS.slice(0, 3)
 
   return (
     <section id="colecoes" className="site-section collections-section">
@@ -24,13 +21,19 @@ export default function CollectionsSection({ artworks }) {
 
       <div className="collections-grid">
         {collections.map((collection, index) => {
-          const artwork = artworks[index]
+          const artwork = (artworks || []).find(
+            (item) => item.collection === collection.slug
+          )
           const imageUrl = artwork?.image
             ? urlFor(artwork.image).width(900).quality(78).url()
             : null
 
           return (
-            <article className="collection-card" key={collection.title}>
+            <Link
+              className="collection-card is-clickable"
+              to={`/colecoes/${collection.slug}`}
+              key={collection.slug}
+            >
               {imageUrl ? (
                 <img src={imageUrl} alt="" loading="lazy" decoding="async" />
               ) : null}
@@ -40,7 +43,7 @@ export default function CollectionsSection({ artworks }) {
                 <p>{collection.subtitle}</p>
                 <span>{String(index + 1).padStart(2, "0")}</span>
               </div>
-            </article>
+            </Link>
           )
         })}
       </div>

@@ -1,15 +1,6 @@
+import { Link } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
-
-// Coleções estáticas por enquanto (sem schema novo no Sanity).
-// Cada card usa uma obra do acervo como imagem de fundo, quando houver.
-const COLLECTIONS = [
-  { title: "Natureza", subtitle: "Séries botânicas e paisagens internas" },
-  { title: "Presença", subtitle: "Retratos, corpo e olhar" },
-  { title: "Devaneios", subtitle: "Memória, sonho e experimentação" },
-  { title: "Objetos", subtitle: "Materialidade, forma e superfície" },
-  { title: "Retratos", subtitle: "Rosto, identidade e expressão" },
-  { title: "Experimentos", subtitle: "Processos abertos e descobertas" },
-]
+import { COLLECTIONS } from "../data/collections"
 
 export default function CollectionsPage({ artworks }) {
   const items = Array.isArray(artworks) ? artworks : []
@@ -28,13 +19,19 @@ export default function CollectionsPage({ artworks }) {
       <section className="page-body">
         <div className="collections-page-grid">
           {COLLECTIONS.map((collection, index) => {
-            const artwork = items[index % Math.max(items.length, 1)]
+            const artwork = items.find(
+              (item) => item.collection === collection.slug
+            )
             const imageUrl = artwork?.image
               ? urlFor(artwork.image).width(1000).quality(78).url()
               : null
 
             return (
-              <article className="collection-page-card" key={collection.title}>
+              <Link
+                className="collection-page-card is-clickable"
+                to={`/colecoes/${collection.slug}`}
+                key={collection.slug}
+              >
                 {imageUrl ? (
                   <img src={imageUrl} alt="" loading="lazy" decoding="async" />
                 ) : (
@@ -46,7 +43,7 @@ export default function CollectionsPage({ artworks }) {
                   <h2>{collection.title}</h2>
                   <p>{collection.subtitle}</p>
                 </div>
-              </article>
+              </Link>
             )
           })}
         </div>

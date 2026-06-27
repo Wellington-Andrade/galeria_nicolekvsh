@@ -2,6 +2,7 @@ import { useCallback, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
 import { artworkMeta } from "../lib/artworkMeta"
+import { whatsappUrl } from "../lib/whatsapp"
 
 // Lightbox reutilizável: imagem ampliada + Ano/Técnica/Dimensões do Sanity.
 // `index` é null quando fechado. Navega com setas/teclado e fecha no Esc/backdrop.
@@ -107,9 +108,19 @@ export default function ArtworkModal({ artworks, index, onClose, onNavigate }) {
             </div>
           </dl>
 
-          <Link className="button" to="/galeria" onClick={onClose}>
-            Ir para a galeria
-          </Link>
+          <div className="section-actions">
+            <a
+              className="button button-primary"
+              href={whatsappUrl(artwork.name)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Adquirir obra
+            </a>
+            <Link className="button" to="/galeria" onClick={onClose}>
+              Ir para a galeria
+            </Link>
+          </div>
         </div>
       </div>
     </div>

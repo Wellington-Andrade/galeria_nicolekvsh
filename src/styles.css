@@ -1299,6 +1299,59 @@ p {
   text-transform: uppercase;
 }
 
+/* ---------- Cards de coleção clicáveis (viram <a>) ---------- */
+a.collection-card,
+a.collection-page-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.collection-card.is-clickable,
+.collection-page-card.is-clickable {
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.collection-card.is-clickable:hover,
+.collection-page-card.is-clickable:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-4px);
+}
+
+.collection-card.is-clickable:focus-visible,
+.collection-page-card.is-clickable:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ---------- /colecoes/:slug — espaços reservados dos quadros ---------- */
+.collection-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.collection-detail-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(12px, 1.6vw, 20px);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(155deg, #14110d, #0a0907);
+}
+
+.collection-detail-frame .image-placeholder {
+  width: 100%;
+  min-height: clamp(220px, 30vh, 320px);
+}
+
+.collection-detail-frame .extras-page-soon {
+  align-self: start;
+  margin-top: 0;
+}
+
 /* ---------- /matarazzo — página editorial ---------- */
 .matarazzo-page-hero {
   position: relative;
@@ -1430,6 +1483,7 @@ p {
 
   .collections-page-grid,
   .extras-page-grid,
+  .collection-detail-grid,
   .editorial-gallery {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1439,6 +1493,7 @@ p {
   .gallery-page-grid,
   .collections-page-grid,
   .extras-page-grid,
+  .collection-detail-grid,
   .editorial-gallery {
     grid-template-columns: 1fr;
   }
@@ -1464,7 +1519,8 @@ p {
 
 /* Os botões dentro do grupo não herdam o margin-top individual */
 .section-copy .section-actions .button,
-.feature-copy .section-actions .button {
+.feature-copy .section-actions .button,
+.artwork-modal-info .section-actions .button {
   margin-top: 0;
 }
 
