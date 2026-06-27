@@ -110,7 +110,7 @@ export default function ArtworkModal({ artworks, index, onClose, onNavigate }) {
               <dd>{meta.dimensions}</dd>
             </div>
             {artwork.collection ? (
-              <div>
+              <div className="feature-meta-full">
                 <dt>Coleção</dt>
                 <dd>
                   <Link

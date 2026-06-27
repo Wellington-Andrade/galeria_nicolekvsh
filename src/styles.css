@@ -651,6 +651,12 @@ p {
   font-size: 1.15rem;
 }
 
+/* Coleção ocupa a linha inteira do grid: na coluna estreita (largura do
+   "2026") o nome quebrava em duas linhas no mobile. */
+.feature-meta-full {
+  grid-column: 1 / -1;
+}
+
 .feature-meta-link {
   color: var(--gold);
   text-decoration: none;

@@ -82,7 +82,7 @@ export default function ArtworkFeature({ artworks = [], featured }) {
             <dd>{meta.dimensions}</dd>
           </div>
           {artwork?.collection ? (
-            <div>
+            <div className="feature-meta-full">
               <dt>Coleção</dt>
               <dd>
                 <Link className="feature-meta-link" to={`/colecoes/${artwork.collection.slug}`}>
