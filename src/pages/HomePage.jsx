@@ -11,7 +11,7 @@ import ContactSection from "../components/ContactSection"
 export default function HomePage({ artworks, collections, featuredArtwork, loading, error }) {
   return (
     <main className="site-main">
-      <Hero artwork={featuredArtwork} loading={loading} />
+      <Hero artwork={featuredArtwork} artworks={artworks} loading={loading} />
       <GallerySection artworks={artworks} loading={loading} error={error} />
       <ArtworkFeature artworks={artworks} featured={featuredArtwork} />
       <MatarazzoSection />

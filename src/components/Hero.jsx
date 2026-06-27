@@ -1,9 +1,27 @@
+import { useState } from "react"
 import { urlFor } from "../lib/sanityClient"
+import ArtworkModal from "./ArtworkModal"
 
-export default function Hero({ artwork, loading }) {
+export default function Hero({ artwork, artworks = [], loading }) {
   const imageUrl = artwork?.image
     ? urlFor(artwork.image).width(1200).quality(84).url()
     : null
+
+  // Lista para o modal: o acervo completo (permite navegar pelas setas).
+  // Fallback para só a obra em destaque caso a lista ainda não tenha chegado.
+  const list =
+    Array.isArray(artworks) && artworks.length
+      ? artworks
+      : artwork
+        ? [artwork]
+        : []
+  const featuredIndex = Math.max(
+    0,
+    list.findIndex((item) => item._id === artwork?._id)
+  )
+
+  // null = modal fechado. Abre ampliando a obra em destaque.
+  const [openIndex, setOpenIndex] = useState(null)
 
   return (
     <section id="inicio" className="site-section hero-section">
@@ -32,20 +50,31 @@ export default function Hero({ artwork, loading }) {
       </div>
 
       <div className="hero-art-area">
-        <div className="hero-art-card">
-          {imageUrl ? (
-            <img
-              src={imageUrl}
-              alt={artwork.name}
-              loading="eager"
-              decoding="async"
-            />
-          ) : (
+        {artwork ? (
+          <button
+            type="button"
+            className="hero-art-card is-clickable"
+            onClick={() => setOpenIndex(featuredIndex)}
+            aria-label={`Ampliar obra: ${artwork.name || ""}`}
+          >
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={artwork.name}
+                loading="eager"
+                decoding="async"
+              />
+            ) : (
+              <div className="image-placeholder">Obra destaque</div>
+            )}
+          </button>
+        ) : (
+          <div className="hero-art-card">
             <div className="image-placeholder">
               {loading ? "Carregando obra" : "Obra destaque"}
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="hero-caption">
           <span>Obra destaque</span>
@@ -54,6 +83,15 @@ export default function Hero({ artwork, loading }) {
       </div>
 
       <a className="scroll-cue" href="#galeria" aria-label="Ir para galeria" />
+
+      {/* Modal renderiza via portal no <body>: cobre a página inteira,
+          sem nada pintando por cima. */}
+      <ArtworkModal
+        artworks={list}
+        index={openIndex}
+        onClose={() => setOpenIndex(null)}
+        onNavigate={setOpenIndex}
+      />
     </section>
   )
 }
