@@ -81,6 +81,16 @@ export default function ArtworkFeature({ artworks = [], featured }) {
             <dt>Dimensões</dt>
             <dd>{meta.dimensions}</dd>
           </div>
+          {artwork?.collection ? (
+            <div>
+              <dt>Coleção</dt>
+              <dd>
+                <Link className="feature-meta-link" to={`/colecoes/${artwork.collection.slug}`}>
+                  {artwork.collection.title}
+                </Link>
+              </dd>
+            </div>
+          ) : null}
         </dl>
 
         {artwork?.description ? <p>{artwork.description}</p> : null}

@@ -109,6 +109,20 @@ export default function ArtworkModal({ artworks, index, onClose, onNavigate }) {
               <dt>Dimensões</dt>
               <dd>{meta.dimensions}</dd>
             </div>
+            {artwork.collection ? (
+              <div>
+                <dt>Coleção</dt>
+                <dd>
+                  <Link
+                    className="feature-meta-link"
+                    to={`/colecoes/${artwork.collection.slug}`}
+                    onClick={onClose}
+                  >
+                    {artwork.collection.title}
+                  </Link>
+                </dd>
+              </div>
+            ) : null}
           </dl>
 
           {artwork.description ? <p>{artwork.description}</p> : null}
