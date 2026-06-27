@@ -57,19 +57,10 @@ export default defineType({
     defineField({
       name: 'collection',
       title: 'Coleção',
-      type: 'string',
+      type: 'reference',
+      to: [{type: 'collection'}],
       description:
-        'Define em qual coleção a obra aparece. Deixe em branco para uma obra independente (não entra em nenhuma coleção).',
-      options: {
-        list: [
-          {title: 'Natureza', value: 'natureza'},
-          {title: 'Presença', value: 'presenca'},
-          {title: 'Devaneios', value: 'devaneios'},
-          {title: 'Objetos', value: 'objetos'},
-          {title: 'Retratos', value: 'retratos'},
-          {title: 'Experimentos', value: 'experimentos'},
-        ],
-      },
+        'Define em qual coleção a obra aparece. Deixe em branco para obra independente.',
     }),
     defineField({
       name: 'published',

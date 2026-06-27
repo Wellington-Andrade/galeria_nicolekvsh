@@ -16,7 +16,7 @@ import CollectionsPage from "./pages/CollectionsPage"
 import CollectionDetailPage from "./pages/CollectionDetailPage"
 import ExtrasPage from "./pages/ExtrasPage"
 import ContactPage from "./pages/ContactPage"
-import { getArtworks, getFeaturedArtwork } from "./lib/sanityClient"
+import { getArtworks, getFeaturedArtwork, getCollections } from "./lib/sanityClient"
 import "./styles.css"
 
 // O menu inferior é o índice da home: só aparece na própria home.
@@ -28,19 +28,20 @@ function HomeBottomNav() {
 
 export default function App() {
   const [artworks, setArtworks] = useState([])
+  const [collections, setCollections] = useState([])
   const [featuredArtwork, setFeaturedArtwork] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // Busca única no topo: home, galeria e coleções compartilham as mesmas obras.
   useEffect(() => {
     let active = true
 
     async function loadContent() {
       try {
-        const [artworksData, featuredData] = await Promise.all([
+        const [artworksData, featuredData, collectionsData] = await Promise.all([
           getArtworks(),
           getFeaturedArtwork(),
+          getCollections(),
         ])
 
         if (!active) return
@@ -49,6 +50,7 @@ export default function App() {
 
         setArtworks(safeArtworks)
         setFeaturedArtwork(featuredData || safeArtworks[0] || null)
+        setCollections(Array.isArray(collectionsData) ? collectionsData : [])
       } catch (err) {
         console.error(err)
         if (active) setError("Não foi possível carregar as obras.")
@@ -77,6 +79,7 @@ export default function App() {
           element={
             <HomePage
               artworks={artworks}
+              collections={collections}
               featuredArtwork={featuredArtwork}
               loading={loading}
               error={error}
@@ -92,11 +95,11 @@ export default function App() {
         <Route path="/matarazzo" element={<MatarazzoPage />} />
         <Route
           path="/colecoes"
-          element={<CollectionsPage artworks={artworks} />}
+          element={<CollectionsPage artworks={artworks} collections={collections} />}
         />
         <Route
           path="/colecoes/:slug"
-          element={<CollectionDetailPage artworks={artworks} />}
+          element={<CollectionDetailPage artworks={artworks} collections={collections} loading={loading} />}
         />
         <Route path="/extras" element={<ExtrasPage />} />
         <Route path="/contato" element={<ContactPage />} />
@@ -106,6 +109,7 @@ export default function App() {
           element={
             <HomePage
               artworks={artworks}
+              collections={collections}
               featuredArtwork={featuredArtwork}
               loading={loading}
               error={error}

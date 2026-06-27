@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
-import { COLLECTIONS } from "../data/collections"
 
-export default function CollectionsPage({ artworks }) {
+export default function CollectionsPage({ artworks, collections }) {
   const items = Array.isArray(artworks) ? artworks : []
+  const list = Array.isArray(collections) ? collections : []
 
   return (
     <main className="site-main page-main">
@@ -18,9 +18,9 @@ export default function CollectionsPage({ artworks }) {
 
       <section className="page-body">
         <div className="collections-page-grid">
-          {COLLECTIONS.map((collection, index) => {
+          {list.map((collection, index) => {
             const artwork = items.find(
-              (item) => item.collection === collection.slug
+              (item) => item.collection?.slug === collection.slug
             )
             const imageUrl = artwork?.image
               ? urlFor(artwork.image).width(1000).quality(78).url()

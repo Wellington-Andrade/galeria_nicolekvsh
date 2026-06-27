@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
-import { COLLECTIONS } from "../data/collections"
 
-export default function CollectionsSection({ artworks }) {
-  const collections = COLLECTIONS.slice(0, 3)
+export default function CollectionsSection({ artworks, collections }) {
+  const list = (collections || []).slice(0, 3)
 
   return (
     <section id="colecoes" className="site-section collections-section">
@@ -20,9 +19,9 @@ export default function CollectionsSection({ artworks }) {
       </div>
 
       <div className="collections-grid">
-        {collections.map((collection, index) => {
+        {list.map((collection, index) => {
           const artwork = (artworks || []).find(
-            (item) => item.collection === collection.slug
+            (item) => item.collection?.slug === collection.slug
           )
           const imageUrl = artwork?.image
             ? urlFor(artwork.image).width(900).quality(78).url()

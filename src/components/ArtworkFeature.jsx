@@ -83,14 +83,7 @@ export default function ArtworkFeature({ artworks = [], featured }) {
           </div>
         </dl>
 
-        {artwork?.description ? (
-          <p>{artwork.description}</p>
-        ) : (
-          <p>
-            Arquivo em construção. As informações completas da obra serão
-            adicionadas em breve diretamente pelo acervo.
-          </p>
-        )}
+        {artwork?.description ? <p>{artwork.description}</p> : null}
 
         <div className="section-actions">
           <AcquireButton artwork={artwork} />

@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { urlFor } from "../lib/sanityClient"
-import { findCollection } from "../data/collections"
 import ArtworkModal from "../components/ArtworkModal"
 
 function CollectionCard({ artwork, index, onOpen }) {
@@ -32,13 +31,22 @@ function CollectionCard({ artwork, index, onOpen }) {
   )
 }
 
-// Detalhe da coleção: mostra as obras cujo campo "collection" (Sanity)
-// corresponde ao slug. Enquanto a coleção não tiver obras, exibe os
-// espaços reservados ("Em breve"), no mesmo espírito de /extras.
-export default function CollectionDetailPage({ artworks }) {
+export default function CollectionDetailPage({ artworks, collections, loading }) {
   const { slug } = useParams()
-  const collection = findCollection(slug)
   const [openIndex, setOpenIndex] = useState(null)
+
+  const collection = (collections || []).find((c) => c.slug === slug) || null
+
+  if (loading) {
+    return (
+      <main className="site-main page-main">
+        <header className="page-hero">
+          <span className="page-index">Coleção</span>
+          <h1>Carregando…</h1>
+        </header>
+      </main>
+    )
+  }
 
   if (!collection) {
     return (
@@ -58,7 +66,7 @@ export default function CollectionDetailPage({ artworks }) {
   }
 
   const all = Array.isArray(artworks) ? artworks : []
-  const items = all.filter((artwork) => artwork.collection === slug)
+  const items = all.filter((artwork) => artwork.collection?.slug === slug)
   const placeholders = Array.from({ length: 6 })
 
   return (

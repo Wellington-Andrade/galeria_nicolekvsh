@@ -909,6 +909,12 @@ p {
   z-index: 18;
   width: min(94%, 1000px);
   transform: translateX(-50%);
+  background: rgba(5, 5, 5, 0.6);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 12px;
+  border: 1px solid rgba(243, 230, 208, 0.09);
+  padding: 14px 20px 12px;
 }
 
 /* Trilho + linha de progresso que avança L -> R conforme o scroll */
@@ -1477,6 +1483,9 @@ a.collection-page-card {
     gap: 12px 0;
     padding-top: 18px;
     padding-bottom: 14px;
+    background: rgba(5, 5, 5, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
   }
 
   .site-header nav {

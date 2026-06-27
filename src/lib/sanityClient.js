@@ -23,7 +23,7 @@ const ARTWORK_PROJECTION = `
   dimensions,
   description,
   available,
-  collection,
+  "collection": collection->{ "slug": slug.current, title, subtitle },
   image {
     ...,
     "assetMetadata": asset->metadata {
@@ -51,6 +51,18 @@ export async function getFeaturedArtwork() {
     *[_type == "artwork" && published == true]
       | order(featured desc, coalesce(order, 0) asc, _createdAt desc)[0] {
         ${ARTWORK_PROJECTION}
+      }
+  `)
+}
+
+export async function getCollections() {
+  return sanityClient.fetch(`
+    *[_type == "collection"]
+      | order(coalesce(order, 999) asc, title asc) {
+        "slug": slug.current,
+        title,
+        subtitle,
+        order
       }
   `)
 }
